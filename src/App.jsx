@@ -1,8 +1,16 @@
-import React from "react";
+import { Outlet } from "react-router-dom";
+import Container from "./components/Container";
+import { Header, Sidebar } from "./exports.js";
 
 function App() {
   return (
-    <div className="text-center font-mono font-bold text-3xl">Wild Oasis</div>
+    <Container>
+      <Header />
+      <Sidebar />
+      <main className="bg-gray-100 pt-16 px-20">
+        <Outlet />
+      </main>
+    </Container>
   );
 }
 
