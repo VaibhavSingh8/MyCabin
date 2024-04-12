@@ -22,7 +22,7 @@ export const TableHeader = ({ children }) => {
 
 export const CabinTable = () => {
   const { isPending, data } = useQuery({
-    queryKey: ["cabins"],
+    queryKey: ["cabin"],
     queryFn: getCabins,
   });
 
