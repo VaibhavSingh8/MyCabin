@@ -11,7 +11,7 @@ function App() {
     <Container>
       <Header />
       <Sidebar />
-      <main className="bg-gray-100 pt-16 px-20 flex flex-col gap-12 mx-0 my-auto max-w-7xl">
+      <main className="bg-gray-100 pt-16 px-20">
         <Outlet />
       </main>
     </Container>
