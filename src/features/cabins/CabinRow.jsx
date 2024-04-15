@@ -1,6 +1,7 @@
 import React from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteCabin } from "../../services/apiCabins";
+import toast from "react-hot-toast";
 
 const TableRow = ({ children }) => {
   return (
@@ -48,9 +49,9 @@ const CabinRow = ({ cabin }) => {
       queryClient.invalidateQueries({
         queryKey: ["cabin"],
       });
-      alert("Cabin deleted successfully");
+      toast.success("Cabin deleted successfully");
     },
-    onError: (err) => alert(err.message),
+    onError: (err) => toast.error(err.message),
   });
 
   return (
