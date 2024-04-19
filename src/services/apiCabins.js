@@ -1,33 +1,5 @@
-// import { Client, Databases } from "appwrite";
-// import config from "./config";
-
-// export class Cabins {
-//   client = new Client();
-
-//   databases;
-
-//   constructor() {
-//     this.client
-//       .setEndpoint(config.appwriteURL)
-//       .setProject(config.appwriteProjectID);
-
-//     this.databases = new Databases(this.client);
-//   }
-
-//   async getCabins() {
-//     try {
-//       return await this.databases.listDocuments(config.appwriteDatabaseID, config.appwriteCabinsID);
-//     } catch (error) {
-//       throw error;
-//     }
-//   }
-// }
-
-// const cabins = new Cabins();
-// export default cabins;
-
-
 import { Client, Databases } from "appwrite";
+import { v4 as uuidv4 } from 'uuid';
 import config from "./config";
 
 const client = new Client();
@@ -52,5 +24,16 @@ export const deleteCabin = async (cabinId) => {
     return await databases.deleteDocument(config.appwriteDatabaseID, config.appwriteCabinsID, cabinId);
   } catch (error) {
     throw new Error("Failed to delete cabin");
+  }
+}
+
+export const createCabin = async (cabinData) => {
+
+  try {
+    const cabinId = uuidv4(); // Generate a new UUID
+    return await databases.createDocument(config.appwriteDatabaseID, config.appwriteCabinsID, cabinId, cabinData)
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to create cabin");
   }
 }

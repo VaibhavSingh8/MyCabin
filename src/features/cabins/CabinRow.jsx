@@ -46,6 +46,7 @@ const CabinRow = ({ cabin }) => {
   const { isPending, mutate } = useMutation({
     mutationFn: deleteCabin,
     onSuccess: () => {
+      //invalidate the cache to refetch the data from the server
       queryClient.invalidateQueries({
         queryKey: ["cabin"],
       });
