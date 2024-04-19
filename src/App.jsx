@@ -11,7 +11,7 @@ function App() {
     <Container>
       <Header />
       <Sidebar />
-      <main className="bg-gray-100 pt-16 px-20 overflow-scroll ">
+      <main className="bg-gray-100 pt-16 px-20 overflow-scroll">
         <Outlet />
       </main>
     </Container>
