@@ -5,7 +5,8 @@ const config = {
   appwriteGuestsID: String(import.meta.env.VITE_APPWRITE_GUESTS_COLLECTION_ID),
   appwriteCabinsID: String(import.meta.env.VITE_APPWRITE_CABINS_COLLECTION_ID),
   appwriteBookingsID: String(import.meta.env.VITE_APPWRITE_BOOKINGS_COLLECTION_ID),
-  appwriteSettingsID: String(import.meta.env.VITE_APPWRITE_SETTINGS_COLLECTION_ID)
+  appwriteSettingsID: String(import.meta.env.VITE_APPWRITE_SETTINGS_COLLECTION_ID),
+  appwriteCabinImagesBucketID: String(import.meta.env.VITE_APPWRITE_CABIN_IMAGES_BUCKET_ID),
 
 }
 
