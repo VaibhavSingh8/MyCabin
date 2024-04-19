@@ -26,13 +26,6 @@ export const CabinTable = () => {
     queryFn: getCabins,
   });
 
-  // const x = useQuery({
-  //   queryKey: ["cabins"],
-  //   queryFn: getCabins,
-  // });
-
-  // console.log(x);
-
   if (isPending) {
     return <Spinner />;
   }

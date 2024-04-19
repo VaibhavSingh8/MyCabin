@@ -1,20 +1,46 @@
-import React, { useState } from "react";
+import React from "react";
 import Input from "../../components/Input";
 import { useForm } from "react-hook-form";
+import Button from "../../components/Button";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createCabin } from "../../services/apiCabins";
+import toast from "react-hot-toast";
 
 const CabinForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const [cabinName, setCabinName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(1000);
-  const [discount, setDiscount] = useState(0);
-  const [maxCapacity, setMaxCapacity] = useState(0);
-  const [image, setImage] = useState(undefined);
+  const queryClient = useQueryClient();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: createCabin,
+    onSuccess: () => {
+      toast.success("Cabin created successfully");
+      //invalidate the cache to refetch the data from the server
+      queryClient.invalidateQueries({
+        queryKey: ["cabin"],
+      });
+      reset();
+    },
+    onError: (err) => toast.error(err.message),
+  });
+
+  const onSubmit = (cabinData) => {
+    // Check if the image input is blank and set its value to null
+    if (cabinData.image === "") {
+      cabinData.image = null;
+    }
+
+    cabinData.maxCapacity = parseInt(cabinData.maxCapacity);
+    cabinData.discount = parseInt(cabinData.discount);
+    cabinData.regularPrice = parseInt(cabinData.regularPrice);
+
+    mutate(cabinData);
+  };
 
   return (
     <form
@@ -25,70 +51,61 @@ const CabinForm = () => {
         label="Cabin name"
         type="text"
         name="cabinName"
-        value={cabinName}
-        onChange={(value) => setCabinName(value)}
+        id="cabinName"
         error={errors.cabinName?.message}
-        register={register("cabinName", { required: "Cabin name is required" })}
+        {...register("name", { required: "Cabin name is required" })}
       />
-
       <Input
         label="Maximum capacity"
         type="number"
         name="maxCapacity"
-        value={maxCapacity}
-        onChange={(value) => setMaxCapacity(value)}
+        id="maxCapacity"
         error={errors.maxCapacity?.message}
-        register={register("maxCapacity", {
-          required: "Maximum Capacity is required",
+        {...register("maxCapacity", {
+          required: "Maximum capacity is required",
+          min: 1,
+          max: 7,
         })}
       />
-
       <Input
         label="Regular price"
         type="number"
-        name="price"
-        value={price}
-        onChange={(value) => setPrice(value)}
+        name="regularPrice"
+        id="regularPrice"
         error={errors.price?.message}
-        register={register("price", { required: "Price is required" })}
+        {...register("regularPrice", {
+          required: "Regular price is required",
+          min: 0,
+        })}
       />
-
       <Input
         label="Discount"
         type="number"
         name="discount"
-        value={discount}
-        onChange={(value) => setDiscount(value)}
+        id="discount"
         error={errors.discount?.message}
-        register={register("discount")}
+        {...register("discount", { value: 0 })}
       />
-
       <Input
         label="Description"
         type="text"
         name="description"
-        value={description}
-        onChange={(value) => setDescription(value)}
+        id="description"
         error={errors.description?.message}
-        register={register("description")}
+        {...register("description")}
       />
-
       <Input
         label="Cabin Image"
-        type="file"
+        type="url"
         name="image"
-        value={image}
-        onChange={(file) => setImage(file)}
+        id="image"
         error={errors.image?.message}
-        register={register("image")}
+        {...register("image")}
       />
-      <div className="flex items-center justify-center">
-        <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-          type="submit"
-        >
-          Submit
-        </button>
+
+      <div className="flex items-center justify-center gap-8">
+        <Button type="reset">Cancel</Button>
+        <Button disabled={isPending}>Submit</Button>
       </div>
     </form>
   );
