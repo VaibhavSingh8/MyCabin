@@ -1,4 +1,7 @@
 import React from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteCabin } from "../../services/apiCabins";
+import toast from "react-hot-toast";
 
 const TableRow = ({ children }) => {
   return (
@@ -35,7 +38,22 @@ const Discount = ({ children }) => {
 };
 
 const CabinRow = ({ cabin }) => {
-  const { name, maxCapacity, regularPrice, discount, image } = cabin;
+  const { $id, name, maxCapacity, regularPrice, discount, image } = cabin;
+
+  const queryClient = useQueryClient();
+
+  //using useMutation to handle deleteCabin functionality
+  const { isPending, mutate } = useMutation({
+    mutationFn: deleteCabin,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["cabin"],
+      });
+      toast.success("Cabin deleted successfully");
+    },
+    onError: (err) => toast.error(err.message),
+  });
+
   return (
     <TableRow role="row">
       <Img src={image} alt={"cabin image"} />
@@ -45,7 +63,13 @@ const CabinRow = ({ cabin }) => {
       <Discount>
         {discount === null || discount === 0 ? "₹ 0" : `₹ ${discount}`}
       </Discount>
-      <button className="bg-blue-300 p-2 rounded-md">Delete</button>
+      <button
+        className="bg-blue-300 p-2 rounded-md"
+        disabled={isPending}
+        onClick={() => mutate($id)}
+      >
+        Delete
+      </button>
     </TableRow>
   );
 };
