@@ -14,7 +14,7 @@ const MainNav = () => {
         <li>
           <Link
             to="/dashboard"
-            className="flex items-center gap-3 text-gray-600 font-medium transition-colors duration-300 py-3 px-6 hover:text-gray-800 hover:bg-gray-100 active:bg-gray-100 active:text-gray-800"
+            className="flex items-center gap-3 text-gray-600 font-medium transition-colors duration-300 py-3 px-4 hover:text-gray-800 hover:bg-gray-100 active:bg-gray-100 active:text-gray-800"
           >
             <HiOutlineHome className="w-6 h-6 text-gray-400 transition-colors duration-300" />
             <span>Home</span>
@@ -23,7 +23,7 @@ const MainNav = () => {
         <li>
           <Link
             to="/bookings"
-            className="flex items-center gap-3 text-gray-600 font-medium transition-colors duration-300 py-3 px-6 hover:text-gray-800 hover:bg-gray-100 active:bg-gray-100 active:text-gray-800"
+            className="flex items-center gap-3 text-gray-600 font-medium transition-colors duration-300 py-3 px-4 hover:text-gray-800 hover:bg-gray-100 active:bg-gray-100 active:text-gray-800"
           >
             <HiOutlineCalendarDays />
             <span>Bookings</span>
@@ -32,7 +32,7 @@ const MainNav = () => {
         <li>
           <Link
             to="/cabins"
-            className="flex items-center gap-3 text-gray-600 font-medium transition-colors duration-300 py-3 px-6 hover:text-gray-800 hover:bg-gray-100 active:bg-gray-100 active:text-gray-800"
+            className="flex items-center gap-3 text-gray-600 font-medium transition-colors duration-300 py-3 px-4 hover:text-gray-800 hover:bg-gray-100 active:bg-gray-100 active:text-gray-800"
           >
             <HiOutlineHomeModern className="w-6 h-6 text-gray-400 transition-colors duration-300" />
             <span>Cabins</span>
@@ -41,7 +41,7 @@ const MainNav = () => {
         <li>
           <Link
             to="/account"
-            className="flex items-center gap-3 text-gray-600 font-medium transition-colors duration-300 py-3 px-6 hover:text-gray-800 hover:bg-gray-100 active:bg-gray-100 active:text-gray-800"
+            className="flex items-center gap-3 text-gray-600 font-medium transition-colors duration-300 py-3 px-4 hover:text-gray-800 hover:bg-gray-100 active:bg-gray-100 active:text-gray-800"
           >
             <HiOutlineUsers className="w-6 h-6 text-gray-400 transition-colors duration-300" />
             <span>Users</span>
@@ -50,7 +50,7 @@ const MainNav = () => {
         <li>
           <Link
             to="/settings"
-            className="flex items-center gap-3 text-gray-600 font-medium transition-colors duration-300 py-3 px-6 hover:text-gray-800 hover:bg-gray-100 active:bg-gray-100 active:text-gray-800"
+            className="flex items-center gap-3 text-gray-600 font-medium transition-colors duration-300 py-3 px-4 hover:text-gray-800 hover:bg-gray-100 active:bg-gray-100 active:text-gray-800"
           >
             <HiOutlineCog6Tooth className="w-6 h-6 text-gray-400 transition-colors duration-300" />
             <span>Settings</span>

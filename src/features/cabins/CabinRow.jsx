@@ -13,11 +13,13 @@ const TableRow = ({ children }) => {
 
 const Img = ({ src, alt }) => {
   return (
-    <img
-      src={src}
-      alt={alt}
-      className="mx-6 w-16 aspect-[3/2] object-cover object-center scale-150 -translate-x-[1.75rem]"
-    />
+    <div className="flex justify-center items-center ml-6 w-14 h-5">
+      <img
+        src={src}
+        alt={alt}
+        className=" aspect-[3/2] object-cover object-center scale-150 -translate-x-[1.75rem]"
+      />
+    </div>
   );
 };
 
@@ -29,12 +31,24 @@ const Cabin = ({ children }) => {
   );
 };
 
+const MaxCapacity = ({ children }) => {
+  return (
+    <div className="font-sono text-gray-600 ml-[-40px] font-medium text-base">
+      {children}
+    </div>
+  );
+};
+
 const Price = ({ children }) => {
-  return <div className="font-sono font-medium">{children}</div>;
+  return <div className="font-sono ml-[-28px] font-medium">{children}</div>;
 };
 
 const Discount = ({ children }) => {
-  return <div className="font-sono font-medium text-green-700">{children}</div>;
+  return (
+    <div className="font-sono font-medium ml-[-12px] text-green-700">
+      {children}
+    </div>
+  );
 };
 
 const CabinRow = ({ cabin }) => {
@@ -59,7 +73,7 @@ const CabinRow = ({ cabin }) => {
     <TableRow role="row">
       <Img src={image} alt={"cabin image"} />
       <Cabin>{name}</Cabin>
-      <div>Fits up to {maxCapacity} guests.</div>
+      <MaxCapacity>Fits up to {maxCapacity} guests.</MaxCapacity>
       <Price>₹ {regularPrice}</Price>
       <Discount>
         {discount === null || discount === 0 ? "₹ 0" : `₹ ${discount}`}

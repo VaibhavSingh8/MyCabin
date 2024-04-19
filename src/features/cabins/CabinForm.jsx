@@ -12,6 +12,7 @@ const CabinForm = () => {
     handleSubmit,
     reset,
     formState: { errors },
+    getValues,
   } = useForm();
 
   const queryClient = useQueryClient();
@@ -52,7 +53,8 @@ const CabinForm = () => {
         type="text"
         name="cabinName"
         id="cabinName"
-        error={errors.cabinName?.message}
+        disabled={isPending}
+        error={errors?.name?.message}
         {...register("name", { required: "Cabin name is required" })}
       />
       <Input
@@ -60,11 +62,12 @@ const CabinForm = () => {
         type="number"
         name="maxCapacity"
         id="maxCapacity"
-        error={errors.maxCapacity?.message}
+        disabled={isPending}
+        error={errors?.maxCapacity?.message}
         {...register("maxCapacity", {
           required: "Maximum capacity is required",
           min: 1,
-          max: 7,
+          message: "Capacity must be greater than 0",
         })}
       />
       <Input
@@ -72,10 +75,14 @@ const CabinForm = () => {
         type="number"
         name="regularPrice"
         id="regularPrice"
-        error={errors.price?.message}
+        disabled={isPending}
+        error={errors?.regularPrice?.message}
         {...register("regularPrice", {
           required: "Regular price is required",
-          min: 0,
+          min: {
+            value: 1,
+            message: "Price must be greater than 0",
+          },
         })}
       />
       <Input
@@ -83,22 +90,29 @@ const CabinForm = () => {
         type="number"
         name="discount"
         id="discount"
-        error={errors.discount?.message}
-        {...register("discount", { value: 0 })}
+        disabled={isPending}
+        error={errors?.discount?.message}
+        {...register("discount", {
+          validate: (value) =>
+            value <= getValues("regularPrice") ||
+            "Discount must be less than or equal to regular price",
+        })}
       />
       <Input
         label="Description"
         type="text"
         name="description"
         id="description"
-        error={errors.description?.message}
-        {...register("description")}
+        disabled={isPending}
+        error={errors?.description?.message}
+        {...register("description", { required: "Description is required" })}
       />
       <Input
         label="Cabin Image"
         type="url"
         name="image"
         id="image"
+        disabled={isPending}
         error={errors.image?.message}
         {...register("image")}
       />
