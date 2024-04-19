@@ -1,10 +1,12 @@
-import { Client, Databases } from "appwrite";
+import { Client, Databases, Storage, ID } from "appwrite";
 import { v4 as uuidv4 } from 'uuid';
 import config from "./config";
 
 const client = new Client();
 
 const databases = new Databases(client);
+
+const storage = new Storage(client);
 
 client
   .setEndpoint(config.appwriteURL) // Your API Endpoint
@@ -27,13 +29,32 @@ export const deleteCabin = async (cabinId) => {
   }
 }
 
+export const uploadImage = async (file) => {
+  try {
+
+    const res = await storage.createFile(config.appwriteCabinImagesBucketID, ID.unique(), file)
+
+    return res["$id"]
+
+  } catch (error) {
+    throw new Error("Failed to upload image");
+  }
+}
+
+
+
 export const createCabin = async (cabinData) => {
 
+  const imageURL = `${config.appwriteURL}/storage/buckets/${config.appwriteCabinImagesBucketID}/files/${cabinData.image}/preview?project=${config.appwriteProjectID}`
+
   try {
-    const cabinId = uuidv4(); // Generate a new UUID
+    const cabinId = uuidv4(); // Generate a new cabin ID
+    cabinData.image = imageURL;
+
     return await databases.createDocument(config.appwriteDatabaseID, config.appwriteCabinsID, cabinId, cabinData)
   } catch (error) {
-    console.log(error);
+
     throw new Error("Failed to create cabin");
   }
+
 }

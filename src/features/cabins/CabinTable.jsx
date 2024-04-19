@@ -14,7 +14,7 @@ export const Table = ({ children }) => {
 
 export const TableHeader = ({ children }) => {
   return (
-    <header className="grid grid-cols-[0.6fr_1.8fr_2.2fr_1fr_1fr_1fr] gap-x-6 items-center bg-gray-50 border-b border-gray-100 text-uppercase tracking-widest font-semibold text-gray-600 px-6 py-4">
+    <header className="grid grid-cols-[0.8fr_1.2fr_2.2fr_1fr_1fr_1fr] gap-x-8 items-center bg-gray-50 border-b border-gray-100 text-uppercase tracking-widest font-semibold text-gray-600 px-6 py-4">
       {children}
     </header>
   );
