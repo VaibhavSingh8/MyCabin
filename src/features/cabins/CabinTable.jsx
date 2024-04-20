@@ -1,8 +1,7 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getCabins } from "../../services/apiCabins";
 import Spinner from "../../components/Spinner";
 import CabinRow from "./CabinRow";
+import { useCabins } from "./useCabins";
 
 export const Table = ({ children }) => {
   return (
@@ -21,10 +20,7 @@ export const TableHeader = ({ children }) => {
 };
 
 export const CabinTable = () => {
-  const { isPending, data } = useQuery({
-    queryKey: ["cabin"],
-    queryFn: getCabins,
-  });
+  const { isPending, data } = useCabins();
 
   if (isPending) {
     return <Spinner />;

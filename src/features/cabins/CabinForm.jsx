@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Input from "../../components/Input";
-import { useForm } from "react-hook-form";
-import Button from "../../components/Button";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createCabin, uploadImage } from "../../services/apiCabins";
 import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
+import { uploadImage } from "../../services/apiCabins";
+import useCreateCabin from "./useCreateCabin";
 
 const CabinForm = () => {
   const {
@@ -15,23 +15,10 @@ const CabinForm = () => {
     getValues,
   } = useForm();
 
-  const queryClient = useQueryClient();
-
   const [fileId, setFileId] = useState(null); // State to store the uploaded file ID
   const [isImageUploading, setIsImageUploading] = useState(false);
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: createCabin,
-    onSuccess: () => {
-      toast.success("Cabin created successfully");
-      //invalidate the cache to refetch the data from the server
-      queryClient.invalidateQueries({
-        queryKey: ["cabin"],
-      });
-      reset();
-    },
-    onError: (err) => toast.error(err.message),
-  });
+  const { createCabin, isCreating } = useCreateCabin();
 
   const handleUpload = async () => {
     try {
@@ -41,7 +28,9 @@ const CabinForm = () => {
       const uploadedFileId = await uploadImage(imageFile);
 
       setFileId(uploadedFileId);
+
       setIsImageUploading(false);
+
       toast.success("Image uploaded successfully");
     } catch (error) {
       setIsImageUploading(false);
@@ -63,7 +52,8 @@ const CabinForm = () => {
     cabinData.discount = parseInt(cabinData.discount);
     cabinData.regularPrice = parseInt(cabinData.regularPrice);
 
-    mutate(cabinData);
+    // Call the createCabin mutation
+    createCabin(cabinData, { onSuccess: (data) => reset() });
   };
 
   return (
@@ -77,7 +67,7 @@ const CabinForm = () => {
           type="text"
           name="cabinName"
           id="cabinName"
-          disabled={isPending}
+          disabled={isCreating}
           error={errors?.name?.message}
           {...register("name", { required: "Cabin name is required" })}
         />
@@ -86,7 +76,7 @@ const CabinForm = () => {
           type="number"
           name="maxCapacity"
           id="maxCapacity"
-          disabled={isPending}
+          disabled={isCreating}
           error={errors?.maxCapacity?.message}
           {...register("maxCapacity", {
             required: "Maximum capacity is required",
@@ -99,7 +89,7 @@ const CabinForm = () => {
           type="number"
           name="regularPrice"
           id="regularPrice"
-          disabled={isPending}
+          disabled={isCreating}
           error={errors?.regularPrice?.message}
           {...register("regularPrice", {
             required: "Regular price is required",
@@ -114,7 +104,7 @@ const CabinForm = () => {
           type="number"
           name="discount"
           id="discount"
-          disabled={isPending}
+          disabled={isCreating}
           error={errors?.discount?.message}
           {...register("discount", {
             validate: (value) =>
@@ -127,7 +117,7 @@ const CabinForm = () => {
           type="text"
           name="description"
           id="description"
-          disabled={isPending}
+          disabled={isCreating}
           error={errors?.description?.message}
           {...register("description", { required: "Description is required" })}
         />
@@ -137,21 +127,21 @@ const CabinForm = () => {
           name="image"
           accept="image/*"
           id="image"
-          disabled={isPending}
+          disabled={isCreating}
           error={errors.image?.message}
-          {...register("image")}
+          {...register("image", { required: "Image is required" })}
         />
 
         <div className="flex items-center justify-center gap-8">
           <Button
             type="button"
             onClick={handleUpload}
-            disabled={isImageUploading || isPending}
+            disabled={isImageUploading || isCreating}
           >
             {isImageUploading ? "Uploading..." : "Upload Image"}
           </Button>
           <Button type="reset">Cancel</Button>
-          <Button disabled={isImageUploading || isPending}>Submit</Button>
+          <Button disabled={isImageUploading || isCreating}>Submit</Button>
         </div>
       </form>
     </>

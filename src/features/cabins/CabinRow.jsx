@@ -1,7 +1,4 @@
-import React from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteCabin } from "../../services/apiCabins";
-import toast from "react-hot-toast";
+import useDeleteCabin from "./useDeleteCabin";
 
 const TableRow = ({ children }) => {
   return (
@@ -54,20 +51,7 @@ const Discount = ({ children }) => {
 const CabinRow = ({ cabin }) => {
   const { $id, name, maxCapacity, regularPrice, discount, image } = cabin;
 
-  const queryClient = useQueryClient();
-
-  //using useMutation to handle deleteCabin functionality
-  const { isPending, mutate } = useMutation({
-    mutationFn: deleteCabin,
-    onSuccess: () => {
-      //invalidate the cache to refetch the data from the server
-      queryClient.invalidateQueries({
-        queryKey: ["cabin"],
-      });
-      toast.success("Cabin deleted successfully");
-    },
-    onError: (err) => toast.error(err.message),
-  });
+  const { isDeleting, deleteCabin } = useDeleteCabin();
 
   return (
     <TableRow role="row">
@@ -75,13 +59,12 @@ const CabinRow = ({ cabin }) => {
       <Cabin>{name}</Cabin>
       <MaxCapacity>Fits up to {maxCapacity} guests.</MaxCapacity>
       <Price>₹ {regularPrice}</Price>
-      <Discount>
-        {discount === null || discount === 0 ? "₹ 0" : `₹ ${discount}`}
-      </Discount>
+      {discount ? <Discount>₹ {discount}</Discount> : <span>&mdash;</span>}
+
       <button
         className="bg-blue-300 p-2 rounded-md"
-        disabled={isPending}
-        onClick={() => mutate($id)}
+        onClick={() => deleteCabin($id)}
+        disabled={isDeleting}
       >
         Delete
       </button>
