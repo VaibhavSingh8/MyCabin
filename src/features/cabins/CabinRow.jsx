@@ -1,4 +1,7 @@
+import { HiOutlineTrash } from "react-icons/hi2";
+import { HiOutlineDuplicate } from "react-icons/hi";
 import useDeleteCabin from "./useDeleteCabin";
+import useCreateCabin from "./useCreateCabin";
 
 const TableRow = ({ children }) => {
   return (
@@ -49,9 +52,23 @@ const Discount = ({ children }) => {
 };
 
 const CabinRow = ({ cabin }) => {
-  const { $id, name, maxCapacity, regularPrice, discount, image } = cabin;
+  const { $id, name, maxCapacity, regularPrice, discount, description, image } =
+    cabin;
 
   const { isDeleting, deleteCabin } = useDeleteCabin();
+
+  const { createCabin, isCreating } = useCreateCabin();
+
+  function handleDuplicate() {
+    createCabin({
+      name: `${name} (Copy)`,
+      maxCapacity,
+      regularPrice,
+      discount,
+      image,
+      description,
+    });
+  }
 
   return (
     <TableRow role="row">
@@ -61,13 +78,22 @@ const CabinRow = ({ cabin }) => {
       <Price>₹ {regularPrice}</Price>
       {discount ? <Discount>₹ {discount}</Discount> : <span>&mdash;</span>}
 
-      <button
-        className="bg-blue-300 p-2 rounded-md"
-        onClick={() => deleteCabin($id)}
-        disabled={isDeleting}
-      >
-        Delete
-      </button>
+      <div className="flex gap-x-4">
+        <button
+          className="max-w-8 rounded-md"
+          onClick={handleDuplicate}
+          disabled={isCreating}
+        >
+          <HiOutlineDuplicate />
+        </button>
+        <button
+          className="max-w-8 rounded-md"
+          onClick={() => deleteCabin($id)}
+          disabled={isDeleting}
+        >
+          <HiOutlineTrash />
+        </button>
+      </div>
     </TableRow>
   );
 };

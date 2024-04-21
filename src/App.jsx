@@ -9,11 +9,13 @@ import { Header, Sidebar } from "./exports.js";
 function App() {
   return (
     <Container>
-      <Header />
       <Sidebar />
-      <main className="bg-gray-100 pt-16 px-20 overflow-scroll">
-        <Outlet />
-      </main>
+      <div className="sm:col-span-10 flex flex-col">
+        <Header />
+        <main className="bg-gray-100 pt-16 px-20 overflow-y-scroll">
+          <Outlet />
+        </main>
+      </div>
     </Container>
   );
 }
