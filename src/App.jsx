@@ -12,7 +12,7 @@ function App() {
       <Sidebar />
       <div className="sm:col-span-10 flex flex-col">
         <Header />
-        <main className="bg-gray-100 pt-16 px-20 overflow-y-scroll">
+        <main className="bg-gray-100 pt-16 px-20 overflow-auto h-screen">
           <Outlet />
         </main>
       </div>

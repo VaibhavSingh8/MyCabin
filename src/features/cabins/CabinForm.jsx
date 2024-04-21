@@ -59,7 +59,7 @@ const CabinForm = () => {
   return (
     <>
       <form
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 font-poppins font-medium"
         onSubmit={handleSubmit(onSubmit)}
       >
         <Input
