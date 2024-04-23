@@ -19,10 +19,18 @@ export const getSettings = async () => {
   }
 };
 
-export const updateSetting = async (setting, docId) => {
+export const updateSetting = async (setting) => {
 
   try {
-    return await databases.updateDocument(config.appwriteDatabaseID, config.appwriteSettingsID, docId, setting)
+
+    const docId = setting.settingsId;
+
+    const fieldName = Object.keys(setting)[0];
+    // Construct the updated setting object
+    const updatedSetting = {
+      [fieldName]: setting[fieldName]
+    };
+    return await databases.updateDocument(config.appwriteDatabaseID, config.appwriteSettingsID, docId, updatedSetting)
   } catch (error) {
     throw new Error("Failed to update settings");
   }

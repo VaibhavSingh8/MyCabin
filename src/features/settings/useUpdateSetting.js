@@ -6,7 +6,7 @@ export const useUpdateSetting = () => {
 
   const queryClient = useQueryClient();
 
-  const { mutate: updateSettingMutation, isLoading: isUpdating } = useMutation({
+  const { mutate, isLoading: isUpdating } = useMutation({
     mutationFn: updateSettingApi,
     onSuccess: () => {
       toast.success("Settings updated successfully");
@@ -14,7 +14,7 @@ export const useUpdateSetting = () => {
     },
     onError: (err) => toast.error(err.message),
   })
-  return { updateSettingMutation, isUpdating };
+  return { mutate, isUpdating };
 };
 
 

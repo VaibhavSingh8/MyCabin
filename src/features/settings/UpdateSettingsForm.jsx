@@ -20,7 +20,7 @@ const UpdateSettingsForm = () => {
     settingsId,
   } = useSettings();
 
-  const { updateSettingMutation, isUpdating } = useUpdateSetting();
+  const { mutate, isUpdating } = useUpdateSetting();
 
   if (isPending) return <Spinner />;
 
@@ -28,7 +28,7 @@ const UpdateSettingsForm = () => {
     const { value } = e.target;
     if (!value) return;
 
-    updateSettingMutation({ [field]: value }, settingsId);
+    mutate({ [field]: value, settingsId });
   };
 
   return (
