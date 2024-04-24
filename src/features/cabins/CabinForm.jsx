@@ -6,7 +6,7 @@ import Button from "../../components/Button";
 import { uploadImage } from "../../services/apiCabins";
 import useCreateCabin from "./useCreateCabin";
 
-const CabinForm = () => {
+const CabinForm = ({ onModalClose }) => {
   const {
     register,
     handleSubmit,
@@ -53,98 +53,119 @@ const CabinForm = () => {
     cabinData.regularPrice = parseInt(cabinData.regularPrice);
 
     // Call the createCabin mutation
-    createCabin(cabinData, { onSuccess: (data) => reset() });
+    createCabin(cabinData, {
+      onSuccess: (data) => {
+        reset();
+        onModalClose?.();
+      },
+    });
+  };
+
+  const Form = ({ type, children, onSubmit }) => {
+    const formClasses = `overflow-hidden bg-white rounded font-poppins font-medium ${
+      type === "regular"
+        ? "p-6 bg-gray-0 border border-gray-100 rounded-md"
+        : type === "modal"
+        ? "w-[60rem] p-6"
+        : ""
+    }`;
+
+    return (
+      <form onSubmit={onSubmit} className={formClasses}>
+        {children}
+      </form>
+    );
   };
 
   return (
-    <>
-      <form
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 font-poppins font-medium"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <Input
-          label="Cabin name"
-          type="text"
-          name="cabinName"
-          id="cabinName"
-          disabled={isCreating}
-          error={errors?.name?.message}
-          {...register("name", { required: "Cabin name is required" })}
-        />
-        <Input
-          label="Maximum capacity"
-          type="number"
-          name="maxCapacity"
-          id="maxCapacity"
-          disabled={isCreating}
-          error={errors?.maxCapacity?.message}
-          {...register("maxCapacity", {
-            required: "Maximum capacity is required",
-            min: 1,
-            message: "Capacity must be greater than 0",
-          })}
-        />
-        <Input
-          label="Regular price"
-          type="number"
-          name="regularPrice"
-          id="regularPrice"
-          disabled={isCreating}
-          error={errors?.regularPrice?.message}
-          {...register("regularPrice", {
-            required: "Regular price is required",
-            min: {
-              value: 1,
-              message: "Price must be greater than 0",
-            },
-          })}
-        />
-        <Input
-          label="Discount"
-          type="number"
-          name="discount"
-          id="discount"
-          disabled={isCreating}
-          error={errors?.discount?.message}
-          {...register("discount", {
-            validate: (value) =>
-              value <= getValues("regularPrice") ||
-              "Discount must be less than or equal to regular price",
-          })}
-        />
-        <Input
-          label="Description"
-          type="text"
-          name="description"
-          id="description"
-          disabled={isCreating}
-          error={errors?.description?.message}
-          {...register("description", { required: "Description is required" })}
-        />
-        <Input
-          label="Cabin Image"
-          type="file"
-          name="image"
-          accept="image/*"
-          id="image"
-          disabled={isCreating}
-          error={errors.image?.message}
-          {...register("image", { required: "Image is required" })}
-        />
+    <Form
+      onSubmit={handleSubmit(onSubmit)}
+      type={onModalClose ? "modal" : "regular"}
+    >
+      <Input
+        label="Cabin name"
+        type="text"
+        name="cabinName"
+        id="cabinName"
+        disabled={isCreating}
+        error={errors?.name?.message}
+        {...register("name", { required: "Cabin name is required" })}
+      />
+      <Input
+        label="Maximum capacity"
+        type="number"
+        name="maxCapacity"
+        id="maxCapacity"
+        disabled={isCreating}
+        error={errors?.maxCapacity?.message}
+        {...register("maxCapacity", {
+          required: "Maximum capacity is required",
+          min: 1,
+          message: "Capacity must be greater than 0",
+        })}
+      />
+      <Input
+        label="Regular price"
+        type="number"
+        name="regularPrice"
+        id="regularPrice"
+        disabled={isCreating}
+        error={errors?.regularPrice?.message}
+        {...register("regularPrice", {
+          required: "Regular price is required",
+          min: {
+            value: 1,
+            message: "Price must be greater than 0",
+          },
+        })}
+      />
+      <Input
+        label="Discount"
+        type="number"
+        name="discount"
+        id="discount"
+        disabled={isCreating}
+        error={errors?.discount?.message}
+        {...register("discount", {
+          validate: (value) =>
+            value <= getValues("regularPrice") ||
+            "Discount must be less than or equal to regular price",
+        })}
+      />
+      <Input
+        label="Description"
+        type="text"
+        name="description"
+        id="description"
+        disabled={isCreating}
+        error={errors?.description?.message}
+        {...register("description", { required: "Description is required" })}
+      />
+      <Input
+        label="Cabin Image"
+        type="file"
+        name="image"
+        accept="image/*"
+        id="image"
+        disabled={isCreating}
+        error={errors.image?.message}
+        {...register("image", { required: "Image is required" })}
+      />
 
-        <div className="flex items-center justify-center gap-8">
-          <Button
-            type="button"
-            onClick={handleUpload}
-            disabled={isImageUploading || isCreating}
-          >
-            {isImageUploading ? "Uploading..." : "Upload Image"}
-          </Button>
-          <Button type="reset">Cancel</Button>
-          <Button disabled={isImageUploading || isCreating}>Submit</Button>
-        </div>
-      </form>
-    </>
+      <div className="flex items-center justify-center gap-8">
+        <Button
+          type="button"
+          onClick={handleUpload}
+          disabled={isImageUploading || isCreating}
+        >
+          {isImageUploading ? "Uploading..." : "Upload Image"}
+        </Button>
+        <Button type="reset" onClick={() => onModalClose?.()}>
+          Cancel
+        </Button>
+        <Button disabled={isImageUploading || isCreating}>Submit</Button>
+      </div>
+    </Form>
   );
 };
 

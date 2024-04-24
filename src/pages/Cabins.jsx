@@ -1,6 +1,6 @@
 import Row from "../components/Row";
 import CabinTable from "../features/cabins/CabinTable";
-import CabinForm from "../features/cabins/CabinForm";
+import AddCabin from "../features/cabins/AddCabin";
 
 const Cabins = () => {
   return (
@@ -12,7 +12,7 @@ const Cabins = () => {
 
       <Row>
         <CabinTable />
-        <CabinForm />
+        <AddCabin />
       </Row>
     </>
   );
