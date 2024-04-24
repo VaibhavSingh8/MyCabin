@@ -5,6 +5,7 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { uploadImage } from "../../services/apiCabins";
 import useCreateCabin from "./useCreateCabin";
+import Form from "../../components/Form";
 
 const CabinForm = ({ onModalClose }) => {
   const {
@@ -15,7 +16,7 @@ const CabinForm = ({ onModalClose }) => {
     getValues,
   } = useForm();
 
-  const [fileId, setFileId] = useState(null); // State to store the uploaded file ID
+  const [fileId, setFileId] = useState(null);
   const [isImageUploading, setIsImageUploading] = useState(false);
 
   const { createCabin, isCreating } = useCreateCabin();
@@ -39,7 +40,6 @@ const CabinForm = ({ onModalClose }) => {
   };
 
   const onSubmit = (cabinData) => {
-    // Check if the image input is blank and set its value to null
     if (cabinData.image === "") {
       cabinData.image = null;
     }
@@ -52,29 +52,12 @@ const CabinForm = ({ onModalClose }) => {
     cabinData.discount = parseInt(cabinData.discount);
     cabinData.regularPrice = parseInt(cabinData.regularPrice);
 
-    // Call the createCabin mutation
     createCabin(cabinData, {
       onSuccess: (data) => {
         reset();
         onModalClose?.();
       },
     });
-  };
-
-  const Form = ({ type, children, onSubmit }) => {
-    const formClasses = `overflow-hidden bg-white rounded font-poppins font-medium ${
-      type === "regular"
-        ? "p-6 bg-gray-0 border border-gray-100 rounded-md"
-        : type === "modal"
-        ? "w-[60rem] p-6"
-        : ""
-    }`;
-
-    return (
-      <form onSubmit={onSubmit} className={formClasses}>
-        {children}
-      </form>
-    );
   };
 
   return (
