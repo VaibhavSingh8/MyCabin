@@ -1,7 +1,5 @@
-import { cloneElement } from "react";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
-import { createContext, useContext, useState } from "react";
 
 const StyledModal = ({ children }) => {
   return (
@@ -30,46 +28,18 @@ const Button = ({ children, onClick }) => {
   );
 };
 
-const ModalContext = createContext();
-
-const Modal = ({ children }) => {
-  const [openName, setOpenName] = useState("");
-
-  const close = () => setOpenName("");
-  const open = setOpenName;
-
-  return (
-    <ModalContext.Provider value={{ close, open, openName }}>
-      {children}
-    </ModalContext.Provider>
-  );
-};
-
-const Open = ({ children, opens: opensWindow }) => {
-  const { open } = useContext(ModalContext);
-
-  return cloneElement(children, { onClick: () => open(opensWindow) });
-};
-
-const Window = ({ children, name }) => {
-  const { close, openName } = useContext(ModalContext);
-
-  if (name !== openName) return null;
-
+const Modal = ({ children, onClose }) => {
   return createPortal(
     <Overlay>
       <StyledModal>
-        <Button onClick={close}>
+        <Button onClick={onClose}>
           <HiXMark />
         </Button>
-        <div>{cloneElement(children, { onModalClose: close })}</div>
+        <div>{children}</div>
       </StyledModal>
     </Overlay>,
     document.body
   );
 };
-
-Modal.Open = Open;
-Modal.Window = Window;
 
 export default Modal;

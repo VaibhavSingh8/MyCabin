@@ -130,6 +130,7 @@ const CabinForm = ({ onModalClose }) => {
         name="image"
         accept="image/*"
         id="image"
+        className="border-none"
         disabled={isCreating}
         error={errors.image?.message}
         {...register("image", { required: "Image is required" })}
