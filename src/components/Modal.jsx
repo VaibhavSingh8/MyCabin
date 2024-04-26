@@ -1,19 +1,43 @@
-import { cloneElement } from "react";
+import React, { cloneElement } from "react";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useRef, useEffect } from "react";
 
-const StyledModal = ({ children }) => {
-  return (
-    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-0 rounded-lg shadow-lg p-8 transition-all duration-500">
-      {children}
-    </div>
-  );
-};
+const StyledModal = React.forwardRef(
+  ({ children, width = "xl", height = "max" }, ref) => {
+    const modalSizes = {
+      xs: "max-w-xs",
+      sm: "max-w-sm",
+      md: "max-w-md",
+      lg: "max-w-lg",
+      xl: "max-w-5xl",
+      full: "max-w-full",
+    };
+
+    const maxHeightStyles = {
+      xs: "max-h-40",
+      sm: "max-h-48",
+      md: "max-h-56",
+      lg: "max-h-64",
+      xl: "max-h-96",
+      max: "max-h-max",
+      full: "h-full",
+    };
+
+    return (
+      <div
+        ref={ref}
+        className={`fixed inset-0 m-auto overflow-auto p-8 bg-white rounded-lg shadow-lg ${modalSizes[width]} ${maxHeightStyles[height]} `}
+      >
+        {children}
+      </div>
+    );
+  }
+);
 
 const Overlay = ({ children }) => {
   return (
-    <div className="fixed top-0 left-0 w-full h-screen bg-backdrop backdrop-filter backdrop-blur-sm z-1000 transition-all duration-500">
+    <div className="fixed inset-0 flex items-center justify-center bg-backdrop backdrop-filter backdrop-blur-sm">
       {children}
     </div>
   );
@@ -34,7 +58,6 @@ const ModalContext = createContext();
 
 const Modal = ({ children }) => {
   const [openName, setOpenName] = useState("");
-
   const close = () => setOpenName("");
   const open = setOpenName;
 
@@ -45,20 +68,38 @@ const Modal = ({ children }) => {
   );
 };
 
-const Open = ({ children, opens: opensWindow }) => {
+const Open = ({
+  children,
+  opens: opensWindow,
+  width = "xl",
+  height = "max",
+}) => {
   const { open } = useContext(ModalContext);
-
-  return cloneElement(children, { onClick: () => open(opensWindow) });
+  return cloneElement(children, {
+    onClick: () => open({ name: opensWindow, width, height }),
+  });
 };
 
 const Window = ({ children, name }) => {
   const { close, openName } = useContext(ModalContext);
+  const ref = useRef();
 
-  if (name !== openName) return null;
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        close();
+      }
+    };
+
+    document.addEventListener("click", handleClick, true); // true: capture phase
+    return () => document.removeEventListener("click", handleClick, true);
+  }, [close]);
+
+  if (!openName || name !== openName.name) return null;
 
   return createPortal(
     <Overlay>
-      <StyledModal>
+      <StyledModal ref={ref} width={openName.width} height={openName.height}>
         <Button onClick={close}>
           <HiXMark />
         </Button>

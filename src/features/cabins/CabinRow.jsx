@@ -2,6 +2,8 @@ import { HiOutlineTrash } from "react-icons/hi2";
 import { HiOutlineDuplicate } from "react-icons/hi";
 import useDeleteCabin from "./useDeleteCabin";
 import useCreateCabin from "./useCreateCabin";
+import Modal from "../../components/Modal";
+import ConfirmDelete from "../../components/ConfirmDelete";
 
 const TableRow = ({ children }) => {
   return (
@@ -86,13 +88,20 @@ const CabinRow = ({ cabin }) => {
         >
           <HiOutlineDuplicate />
         </button>
-        <button
-          className="max-w-8 rounded-md"
-          onClick={() => deleteCabin($id)}
-          disabled={isDeleting}
-        >
-          <HiOutlineTrash />
-        </button>
+        <Modal width="lg">
+          <Modal.Open width="lg">
+            <button className="max-w-8 rounded-md" disabled={isDeleting}>
+              <HiOutlineTrash />
+            </button>
+          </Modal.Open>
+          <Modal.Window>
+            <ConfirmDelete
+              resourceName="cabins"
+              disabled={isDeleting}
+              onConfirm={() => deleteCabin($id)}
+            />
+          </Modal.Window>
+        </Modal>
       </div>
     </TableRow>
   );

@@ -5,7 +5,7 @@ import { useCabins } from "./useCabins";
 
 export const Table = ({ children }) => {
   return (
-    <div className="border border-gray-200 text-sm bg-gray-0 rounded-md overflow-hidden">
+    <div className="border border-gray-200 bg-gray-0 rounded-md overflow-hidden text-base font-poppins">
       {children}
     </div>
   );
