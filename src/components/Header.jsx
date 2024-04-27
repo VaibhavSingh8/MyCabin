@@ -1,5 +1,9 @@
 const Header = () => {
-  return <header className="bg-orange-500 py-10 px-6">Header</header>;
+  return (
+    <header className="bg-indigo-500 py-6 px-6 text-indigo-50 font-poppins font-medium rounded-b-xl">
+      Header
+    </header>
+  );
 };
 
 export default Header;

@@ -2,6 +2,7 @@ import React from "react";
 import Spinner from "../../components/Spinner";
 import CabinRow from "./CabinRow";
 import { useCabins } from "./useCabins";
+import { useSearchParams } from "react-router-dom";
 
 export const Table = ({ children }) => {
   return (
@@ -22,9 +23,27 @@ export const TableHeader = ({ children }) => {
 export const CabinTable = () => {
   const { isPending, data } = useCabins();
 
+  const [searchParams] = useSearchParams();
+
   if (isPending) {
     return <Spinner />;
   }
+
+  // Filter cabins based on the discount query parameter
+  const filteredValue = searchParams.get("discount") || "all";
+
+  let filteredCabins;
+  if (filteredValue === "all") {
+    filteredCabins = data?.documents;
+  } else if (filteredValue === "no-discount") {
+    filteredCabins = data?.documents?.filter(
+      (cabin) => cabin.discount === 0 || cabin.discount === null
+    );
+  } else if (filteredValue === "with-discount") {
+    filteredCabins = data?.documents?.filter((cabin) => cabin.discount > 0);
+  }
+
+  // Sort cabins by price
 
   return (
     <Table role="table">
@@ -36,8 +55,8 @@ export const CabinTable = () => {
         <div>Discount</div>
         <div></div>
       </TableHeader>
-      {data?.documents?.map((c) => (
-        <CabinRow cabin={c} key={c.$id} />
+      {filteredCabins.map((cabin) => (
+        <CabinRow cabin={cabin} key={cabin.$id} />
       ))}
     </Table>
   );
