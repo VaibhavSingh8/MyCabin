@@ -10,9 +10,9 @@ const StyledFilter = ({ children }) => {
 };
 
 const FilterButton = ({ active, children, ...props }) => {
-  const buttonClasses = `bg-white border-none rounded-md text-base px-2 py-1 transition-colors font-poppins font-normal ${
+  const buttonClasses = `border-none rounded-md text-base px-2 py-1 transition-colors font-poppins font-normal ${
     active
-      ? "bg-brand-600 text-slate-300"
+      ? "bg-indigo-500 text-indigo-50"
       : "hover:bg-indigo-500 hover:text-indigo-50"
   }`;
 
@@ -23,23 +23,29 @@ const FilterButton = ({ active, children, ...props }) => {
   );
 };
 
-const Filter = () => {
+const Filter = ({ filterField, options }) => {
   const [searchParams, setSearchParams] = useSearchParams(); //for setting the search params according to the filter
 
   const handleClick = (value) => {
-    searchParams.set("discount", value);
+    searchParams.set(filterField, value);
     setSearchParams(searchParams);
   };
 
   return (
     <StyledFilter>
-      <FilterButton onClick={() => handleClick("all")}>All</FilterButton>
-      <FilterButton onClick={() => handleClick("no-discount")}>
-        No discount
-      </FilterButton>
-      <FilterButton onClick={() => handleClick("with-discount")}>
-        Discount Applied
-      </FilterButton>
+      {/* Loop through the options and create a button for each */}
+      {options.map((option) => {
+        const active = searchParams.get(filterField) === option.value;
+        return (
+          <FilterButton
+            key={option.value}
+            active={active}
+            onClick={() => handleClick(option.value)}
+          >
+            {option.label}
+          </FilterButton>
+        );
+      })}
     </StyledFilter>
   );
 };
