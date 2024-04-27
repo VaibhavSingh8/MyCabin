@@ -89,7 +89,7 @@ const CabinRow = ({ cabin }) => {
           <HiOutlineDuplicate />
         </button>
         <Modal width="lg">
-          <Modal.Open width="lg">
+          <Modal.Open width="lg" name="delete">
             <button className="max-w-8 rounded-md" disabled={isDeleting}>
               <HiOutlineTrash />
             </button>
