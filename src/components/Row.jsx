@@ -1,6 +1,6 @@
 import React from "react";
 
-const Row = ({ type = "vertical", children }) => {
+const Row = ({ type = "vertical", children, className }) => {
   return (
     <div
       className={`
@@ -9,7 +9,7 @@ const Row = ({ type = "vertical", children }) => {
           type === "horizontal"
             ? "justify-between items-center"
             : "flex-col gap-6"
-        }
+        } ${className}
       `}
     >
       {children}

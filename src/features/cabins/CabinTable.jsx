@@ -6,7 +6,7 @@ import { useSearchParams } from "react-router-dom";
 
 export const Table = ({ children }) => {
   return (
-    <div className="border border-gray-200 bg-gray-0 rounded-md overflow-hidden text-base font-poppins">
+    <div className="border border-gray-200 bg-gray-0 rounded-md overflow-auto text-base font-poppins">
       {children}
     </div>
   );
@@ -43,7 +43,23 @@ export const CabinTable = () => {
     filteredCabins = data?.documents?.filter((cabin) => cabin.discount > 0);
   }
 
-  // Sort cabins by price
+  // Sort cabins
+  const sortBy = searchParams.get("sortBy") || "regularPrice-asc";
+
+  const [field, direction] = sortBy.split("-");
+
+  const modifier = direction === "asc" ? 1 : -1;
+
+  const sortedCabins = filteredCabins?.sort((a, b) => {
+    const fieldA = a[field];
+    const fieldB = b[field];
+
+    if (typeof fieldA === "string" && typeof fieldB === "string") {
+      return fieldA.localeCompare(fieldB) * modifier;
+    } else {
+      return (fieldA - fieldB) * modifier;
+    }
+  });
 
   return (
     <Table role="table">
@@ -55,7 +71,7 @@ export const CabinTable = () => {
         <div>Discount</div>
         <div></div>
       </TableHeader>
-      {filteredCabins.map((cabin) => (
+      {sortedCabins.map((cabin) => (
         <CabinRow cabin={cabin} key={cabin.$id} />
       ))}
     </Table>
