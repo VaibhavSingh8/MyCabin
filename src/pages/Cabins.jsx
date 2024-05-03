@@ -12,7 +12,7 @@ const Cabins = () => {
         <CabinTableOperations />
       </Row>
 
-      <Row>
+      <Row className="overflow-scroll md:overflow-auto">
         <CabinTable />
         <AddCabin />
       </Row>
