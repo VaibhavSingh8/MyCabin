@@ -35,7 +35,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      { path: "/", element: <Navigate replace to="dashboard" /> },
+      { path: "/", element: <Navigate replace to="cabins" /> },
       { path: "/dashboard", element: <Dashboard /> },
       { path: "/account", element: <Account /> },
       { path: "/bookings", element: <Bookings /> },
