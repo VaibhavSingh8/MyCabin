@@ -13,10 +13,11 @@ const Sort = ({ options }) => {
       onChange={handleChange}
       value={searchParams.get("sortBy") || "name-asc"}
     >
+      
       {options.map((option) => (
         <option value={option.value} key={option.value}>
           {option.label}
-          {console.log(option.label)}
+          
         </option>
       ))}
     </select>
