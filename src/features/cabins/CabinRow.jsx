@@ -7,19 +7,16 @@ import Table from "../../components/Table";
 
 const Img = ({ src, alt }) => {
   return (
-    <td className="flex justify-center items-center ml-6 w-14 h-5">
-      <img
-        src={src}
-        alt={alt}
-        className="aspect-[3/2] object-cover object-center scale-150 -translate-x-[1.75rem]"
-      />
+    <td className="p-2">
+      <img src={src} alt={alt} className="aspect-[3/2] object-cover object-center max-w-[6rem] mx-auto" />
     </td>
   );
 };
 
+
 const Cabin = ({ children }) => {
   return (
-    <td className="font-sono text-gray-600 font-medium text-base">
+    <td className="font-sono text-gray-600 font-medium text-base p-2 pl-4 whitespace-nowrap">
       {children}
     </td>
   );
@@ -27,19 +24,19 @@ const Cabin = ({ children }) => {
 
 const MaxCapacity = ({ children }) => {
   return (
-    <td className="font-sono text-gray-600 ml-[-40px] font-medium text-base">
+    <td className="font-sono text-gray-600 ml-[-40px] font-medium text-base p-2 pl-4 whitespace-nowrap">
       {children}
     </td>
   );
 };
 
 const Price = ({ children }) => {
-  return <td className="font-sono ml-[-28px] font-medium">{children}</td>;
+  return <td className="font-sono ml-[-28px] font-medium p-2 pl-4 whitespace-nowrap">{children}</td>;
 };
 
 const Discount = ({ children }) => {
   return (
-    <td className="font-sono font-medium ml-[-12px] text-green-700">
+    <td className="font-sono font-medium ml-[-12px] text-green-700 p-2 pl-4 whitespace-nowrap">
       {children}
     </td>
   );
@@ -71,13 +68,14 @@ const CabinRow = ({ cabin }) => {
       <Price>₹ {regularPrice}</Price>
       {discount ? <Discount>₹ {discount}</Discount> : <span>&mdash;</span>}
 
-      <td className={`flex gap-x-4`}>
-        <button className="max-w-8 rounded-md" onClick={handleDuplicate} disabled={isCreating}>
+      <td className="p-2">
+        <button className="max-w-8 rounded-md hover:bg-slate-200 p-2" onClick={handleDuplicate} disabled={isCreating}>
           <HiOutlineDuplicate />
         </button>
+        
         <Modal width="lg">
           <Modal.Open width="lg" name="delete">
-            <button className="max-w-8 rounded-md" disabled={isDeleting}>
+            <button className="max-w-8 rounded-md p-2 hover:bg-slate-200" disabled={isDeleting}>
               <HiOutlineTrash />
             </button>
           </Modal.Open>
@@ -89,7 +87,7 @@ const CabinRow = ({ cabin }) => {
             />
           </Modal.Window>
         </Modal>
-      </td>
+        </td>
     </Table.Row>
   );
 };

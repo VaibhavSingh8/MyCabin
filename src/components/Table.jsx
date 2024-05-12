@@ -1,42 +1,36 @@
-import { createContext } from "react";
+//import { createContext } from "react";
 
-export const TableContext = createContext();
+//export const TableContext = createContext();
 
 const Table = ({ children }) => {
-    return (
-      <table className="table-auto">
-        <TableContext.Provider value={{}}>
-          {children}
-        </TableContext.Provider>
-      </table>
-    );
-  };
+  return (
+		<div className="overflow-auto">
+			<table className="table-auto w-full shadow-md mt-5 rounded border border-gray-200 bg-gray-0 overflow-auto text-base font-poppins">
+				{children}
+			</table>
+		</div>
+  );
+};
 
-  const Header = ({ children }) => {
-    return (
-      <thead>
-        <tr>{children}</tr>
-      </thead>
-    );
-  };
-  
-  const Row = ({ children }) => {
-    return (
+const Header = ({ children }) => {
+  return (
+    <thead className="bg-gray-50 border-b border-gray-100 text-uppercase tracking-widest font-semibold text-gray-600">
       <tr>{children}</tr>
-    );
-  };
-  
-	const Body = ({ children }) => {
-			return (
-					<tbody>{children}</tbody>
-				);
-	};
+    </thead>
+  );
+};
+
+const Row = ({ children }) => {
+  return <tr className="items-center border-b border-gray-100 last:border-b-0 text-gray-600">{children}</tr>;
+};
+
+const Body = ({ children }) => {
+  return <tbody>{children}</tbody>;
+};
 
 const Footer = ({ children }) => {
-    return (
-      <tfoot className="bg-gray-50 flex justify-center p-3 empty:hidden">{children}</tfoot>
-    );
-  };
+  return <tfoot className="bg-gray-50 flex justify-center p-3 empty:hidden">{children}</tfoot>;
+};
 
 Table.Header = Header;
 Table.Row = Row;
