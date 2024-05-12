@@ -14,7 +14,7 @@ const Sort = ({ options }) => {
       value={searchParams.get("sortBy") || "name-asc"}
     >
       
-      {options.map((option) => (
+      {options?.map((option) => (
         <option value={option.value} key={option.value}>
           {option.label}
           
