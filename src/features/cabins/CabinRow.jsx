@@ -16,7 +16,7 @@ const Img = ({ src, alt }) => {
 
 const Cabin = ({ children }) => {
   return (
-    <td className="font-sono text-gray-600 font-medium text-base p-2 pl-4 whitespace-nowrap">
+    <td className="font-sono text-gray-600 font-medium text-base text-center p-2 pl-2 whitespace-nowrap">
       {children}
     </td>
   );
@@ -24,19 +24,19 @@ const Cabin = ({ children }) => {
 
 const MaxCapacity = ({ children }) => {
   return (
-    <td className="font-sono text-gray-600 ml-[-40px] font-medium text-base p-2 pl-4 whitespace-nowrap">
+    <td className="font-sono text-gray-600 ml-[-40px] font-medium text-base text-center p-2 pl-4 whitespace-nowrap">
       {children}
     </td>
   );
 };
 
 const Price = ({ children }) => {
-  return <td className="font-sono ml-[-28px] font-medium p-2 pl-4 whitespace-nowrap">{children}</td>;
+  return <td className="font-sono ml-[-28px] font-medium p-2 pl-4 text-center whitespace-nowrap">{children}</td>;
 };
 
 const Discount = ({ children }) => {
   return (
-    <td className="font-sono font-medium ml-[-12px] text-green-700 p-2 pl-4 whitespace-nowrap">
+    <td className="font-sono font-medium text-green-700 p-2 text-center whitespace-nowrap">
       {children}
     </td>
   );

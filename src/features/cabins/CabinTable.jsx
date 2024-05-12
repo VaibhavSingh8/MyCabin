@@ -51,12 +51,12 @@ export const CabinTable = () => {
   return (
     <Table>
       <Table.Header>
-        <th className="p-4 text-start"></th>
-        <th className="p-4 text-start">Cabin</th>
-        <th className="p-4 text-start">Capacity</th>
-        <th className="p-4 text-start">Price</th>
-        <th className="p-4 text-start">Discount</th>
-        <th className="p-4 text-start"></th>
+        <th className="p-4 text-center"></th>
+        <th className="p-4 text-center">Cabin</th>
+        <th className="p-4 text-center">Capacity</th>
+        <th className="p-4 text-center">Price</th>
+        <th className="p-4 text-center">Discount</th>
+        <th className="p-4 text-center"></th>
       </Table.Header>
       <Table.Body>
       {sortedCabins.map((cabin) => (
