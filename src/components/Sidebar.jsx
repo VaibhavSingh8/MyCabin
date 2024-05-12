@@ -1,9 +1,9 @@
 import MainNav from "./MainNav";
 import Logo from "./Logo";
 
-const Sidebar = () => {
+const Sidebar = ({ className }) => {
   return (
-    <div className="p-6 sm:col-span-2">
+    <div className={`p-6 ${className}`}>
       <Logo />
       <MainNav />
     </div>
