@@ -17,7 +17,7 @@ export const getCabins = async () => {
   try {
     return await databases.listDocuments(config.appwriteDatabaseID, config.appwriteCabinsID);
   } catch (error) {
-    throw error;
+    throw new Error("Couldn't retrieve Cabins");
   }
 };
 

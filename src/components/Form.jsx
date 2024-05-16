@@ -1,4 +1,3 @@
-import React from "react";
 
 const Form = ({ type, children, onSubmit }) => {
   const formClasses = `overflow-hidden font-poppins font-medium bg-white rounded-md ${
