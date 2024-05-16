@@ -1,4 +1,3 @@
-import Row from "../components/Row";
 import CabinTable from "../features/cabins/CabinTable";
 import AddCabin from "../features/cabins/AddCabin";
 import CabinTableOperations from "../features/cabins/CabinTableOperations";
@@ -6,16 +5,15 @@ import CabinTableOperations from "../features/cabins/CabinTableOperations";
 const Cabins = () => {
   return (
     <>
-      <Row type="horizontal">
-        <h1>All Cabins</h1>
-
+      <div className="flex justify-between items-center">
+        <h1 className="font-semibold text-2xl ml-5">All Cabins</h1>
         <CabinTableOperations />
-      </Row>
+      </div>
 
-      <Row className="overflow-scroll md:overflow-auto">
+      <div className="overflow-scroll md:overflow-auto">
         <CabinTable />
         <AddCabin />
-      </Row>
+      </div>
     </>
   );
 };

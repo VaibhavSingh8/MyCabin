@@ -20,7 +20,7 @@ const UpdateSettingsForm = () => {
     settingsId,
   } = useSettings();
 
-  const { mutate, isUpdating } = useUpdateSetting();
+  const { mutate } = useUpdateSetting();
 
   if (isPending) return <Spinner />;
 

@@ -1,3 +1,4 @@
+import Empty from "../../components/Empty";
 import Spinner from "../../components/Spinner";
 import Table from "../../components/Table";
 import CabinRow from "./CabinRow";
@@ -13,6 +14,8 @@ export const CabinTable = () => {
   if (isPending) {
     return <Spinner />;
   }
+  
+  if(!data.documents.length) return <Empty resourceName='Cabins'/>
 
   // Filter cabins based on the discount query parameter
   const filteredValue = searchParams.get("discount") || "all";
@@ -46,8 +49,6 @@ export const CabinTable = () => {
     }
   });
 
-  
-
   return (
     <Table>
       <Table.Header>
@@ -58,11 +59,11 @@ export const CabinTable = () => {
         <th className="p-4 text-center">Discount</th>
         <th className="p-4 text-center"></th>
       </Table.Header>
-      <Table.Body>
-      {sortedCabins.map((cabin) => (
-        <CabinRow cabin={cabin} key={cabin.$id} />
-      ))}
-      </Table.Body>
+
+      {/* Using render props pattern to render the cabins */}
+      <Table.Body data={sortedCabins} 
+      render={(cabin) => <CabinRow cabin={cabin} key={cabin.$id} />}
+      />
     </Table>
   );
 };

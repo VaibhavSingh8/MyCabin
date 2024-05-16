@@ -24,8 +24,10 @@ const Row = ({ children }) => {
   return <tr className="items-center border-b border-gray-100 last:border-b-0 text-gray-600">{children}</tr>;
 };
 
-const Body = ({ children }) => {
-  return <tbody>{children}</tbody>;
+// Using Render props pattern
+const Body = ({ data, render }) => {
+  if (!data.length) return <p className="text-center m-10">No data to show at the moment</p>;
+  return <tbody className="bg-white">{data.map(render)}</tbody>;
 };
 
 const Footer = ({ children }) => {
