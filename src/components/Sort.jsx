@@ -9,9 +9,9 @@ const Sort = ({ options }) => {
   }
   return (
     <select
-      className="bg-white border border-solid border-gray-200 rounded-sm py-1 px-2 font-poppins shadow-sm"
+      className="bg-white border border-solid border-gray-200 rounded-sm py-2 px-2 font-poppins shadow-sm"
       onChange={handleChange}
-      value={searchParams.get("sortBy") || "name-asc"}
+      value={searchParams.get("sortBy")}
     >
       
       {options?.map((option) => (

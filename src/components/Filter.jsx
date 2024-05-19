@@ -8,7 +8,7 @@ const StyledFilter = ({ children }) => {
   );
 };
 
-const FilterButton = ({ active, children, ...props }) => {
+const FilterButton = ({ active , children, ...props }) => {
   const buttonClasses = `border-none rounded-md text-base px-2 py-1 transition-colors font-poppins font-normal ${
     active
       ? "bg-indigo-500 text-indigo-50"
@@ -23,10 +23,15 @@ const FilterButton = ({ active, children, ...props }) => {
 };
 
 const Filter = ({ filterField, options }) => {
-  const [searchParams, setSearchParams] = useSearchParams(); //for setting the search params according to the filter
+  const [searchParams, setSearchParams] = useSearchParams(); // Set the search params according to the filter
 
   const handleClick = (value) => {
-    searchParams.set(filterField, value);
+    // Set the search params according to the filter
+    if (value === "all") {
+      searchParams.delete(filterField);
+    } else {
+      searchParams.set(filterField, value);
+    }
     setSearchParams(searchParams);
   };
 
@@ -34,7 +39,8 @@ const Filter = ({ filterField, options }) => {
     <StyledFilter>
       {/* Loop through the options and create a button for each */}
       {options.map((option) => {
-        const active = searchParams.get(filterField) === option.value;
+        const active = option.value === 'all' ? !searchParams.has(filterField) 
+        : searchParams.get(filterField) === option.value;
         return (
           <FilterButton
             key={option.value}
