@@ -1,31 +1,39 @@
-import { Client, Databases} from "appwrite";
-
+import { Client, Databases, Query } from "appwrite";
 import config from "./config";
 
 const client = new Client();
-
 const databases = new Databases(client);
-
 
 client
   .setEndpoint(config.appwriteURL)
   .setProject(config.appwriteProjectID);
 
-export const getBookings = async () => {
+export const getBookings = async (queries = [], limit = 10, cursor = null, cursorDirection = 'after') => {
+  const queryOptions = [];
 
-    // query to fetch the desired fields
-  // const query = [
-  //   Query.select(
-  //     "*",
-  //     "cabinID.name",
-  //     "guestID.fullName",
-  //     "guestID.email"
-  //   ),
-  // ];
+  // Ensure the limit is set and valid
+  if (limit) {
+    queryOptions.push(Query.limit(limit));
+  } else {
+    throw new Error("Limit must be a valid number");
+  }
+
+  // Add additional queries
+  queryOptions.push(...queries);
+
+  // For cursor pagination
+  if (cursor) {
+    if (cursorDirection === 'after') {
+      queryOptions.push(Query.cursorAfter(cursor));
+    } else if (cursorDirection === 'before') {
+      queryOptions.push(Query.cursorBefore(cursor));
+    }
+  }
 
   try {
-    return await databases.listDocuments(config.appwriteDatabaseID, config.appwriteBookingsID);
+    return await databases.listDocuments(config.appwriteDatabaseID, config.appwriteBookingsID, queryOptions);
   } catch (error) {
+    console.error("Error fetching bookings:", error);
     throw new Error("Couldn't find Bookings. Please retry!");
   }
 };

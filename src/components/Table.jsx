@@ -30,8 +30,8 @@ const Body = ({ data, render }) => {
   return <tbody className="bg-white">{data.map(render)}</tbody>;
 };
 
-const Footer = ({ children }) => {
-  return <tfoot className="bg-gray-50 flex justify-center p-3 empty:hidden">{children}</tfoot>;
+const Footer = ({ children, className }) => {
+  return <div className={`bg-gray-50 p-3 empty:hidden ${className}`}>{children}</div>;
 };
 
 Table.Header = Header;
