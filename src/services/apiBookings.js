@@ -33,7 +33,7 @@ export const getBookings = async (queries = [], limit = 10, cursor = null, curso
   try {
     return await databases.listDocuments(config.appwriteDatabaseID, config.appwriteBookingsID, queryOptions);
   } catch (error) {
-    console.error("Error fetching bookings:", error);
+    
     throw new Error("Couldn't find Bookings. Please retry!");
   }
 };

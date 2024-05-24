@@ -64,25 +64,25 @@ const BookingTable = () => {
   });
 
   // Pagination Handlers
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      const prev = currentPage - 1;
-      searchParams.set("page", prev);
-      setSearchParams(searchParams);
-      setCursor(sortedBookings[0].$id);
-      setCursorDirection('before');
-    }
-  };
 
-  const handleNextPage = () => {
-    if (sortedBookings?.documents.length === limit) {
-      const next = currentPage + 1;
-      searchParams.set("page", next);
-      setSearchParams(searchParams);
-      setCursor(sortedBookings[sortedBookings.length - 1].$id);
-      setCursorDirection('after');
-    }
-  };
+  const totalPages = Math.ceil( bookings?.total / limit);
+
+    const handleNextPage = () => {
+        const next = currentPage === totalPages ? currentPage : currentPage + 1;
+        searchParams.set("page", next);
+        setSearchParams(searchParams);
+        setCursor(sortedBookings[sortedBookings.length - 1].$id);
+        setCursorDirection('after');
+        
+    };
+
+    const handlePrevPage = () => {
+        const prev = currentPage === 1 ? currentPage : currentPage - 1;
+        searchParams.set("page", prev);
+        setSearchParams(searchParams);
+        setCursor(sortedBookings[0].$id);
+        setCursorDirection('before');
+    };
 
   return (
     <>
@@ -103,6 +103,7 @@ const BookingTable = () => {
       </Table>
       <Pagination 
         totalResults={bookings.total}
+        totalPages={totalPages}
         currentPage={currentPage}
         onPrevPage={handlePrevPage}
         onNextPage={handleNextPage}
