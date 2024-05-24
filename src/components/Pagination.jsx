@@ -1,9 +1,9 @@
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 
-const Pagination = ({totalResults, currentPage, onPrevPage, onNextPage, itemsPerPage}) => {
+const Pagination = ({totalResults, totalPages, currentPage, onPrevPage, onNextPage, itemsPerPage}) => {
 
-    const totalPages = Math.ceil( totalResults / itemsPerPage);
-     if (totalPages <= 1) return null;
+    
+    if (totalPages <= 1) return null;
 
   return (
     <div className="flex items-center justify-between w-full shadow-sm rounded border border-gray-200 border-t-0 p-4 bg-gray-50">
@@ -13,10 +13,10 @@ const Pagination = ({totalResults, currentPage, onPrevPage, onNextPage, itemsPer
             {totalResults}</span> results
         </p>
         <div className="flex gap-1.5 mr-4">
-            <button onClick={onPrevPage} className="flex items-center justify-center gap-1 px-2 py-1.5 font-medium text-base rounded-md hover:bg-indigo-500 hover:text-indigo-50"> 
+            <button onClick={onPrevPage} disabled={currentPage === 1} className="flex items-center justify-center gap-1 px-2 py-1.5 font-medium text-base rounded-md hover:bg-indigo-500 hover:text-indigo-50"> 
                 <HiChevronLeft /> <span>Previous</span> 
             </button>
-            <button onClick={onNextPage} className="flex items-center justify-center gap-1 px-2 py-1.5 font-medium text-base rounded-md hover:bg-indigo-500 hover:text-indigo-50"> 
+            <button onClick={onNextPage} disabled={currentPage === totalPages} className="flex items-center justify-center gap-1 px-2 py-1.5 font-medium text-base rounded-md hover:bg-indigo-500 hover:text-indigo-50"> 
                 <span>Next</span> <HiChevronRight />
             </button>
         </div>

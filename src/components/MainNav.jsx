@@ -25,7 +25,7 @@ const MainNav = () => {
             to="/bookings"
             className="flex items-center gap-3 text-gray-600 font-medium transition-colors duration-300 py-3 px-4 hover:text-gray-800 hover:bg-gray-100 active:bg-gray-100 active:text-gray-800"
           >
-            <HiOutlineCalendarDays />
+            <HiOutlineCalendarDays className="w-6 h-6 text-gray-400 transition-colors duration-300"/>
             <span>Bookings</span>
           </Link>
         </li>
