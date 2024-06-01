@@ -15,6 +15,8 @@ import {
   Bookings,
   Cabins,
   Settings,
+  Booking,
+  Checkin,
 } from "./exports.js";
 import App from "./App.jsx";
 import "./index.css";
@@ -39,6 +41,8 @@ const router = createBrowserRouter([
       { path: "/dashboard", element: <Dashboard /> },
       { path: "/account", element: <Account /> },
       { path: "/bookings", element: <Bookings /> },
+      { path: "/booking/:bookingId", element: <Booking /> },
+      { path: "/checkin/:bookingId", element: <Checkin /> },
       { path: "/cabins", element: <Cabins /> },
       { path: "/settings", element: <Settings /> },
       { path: "/login", element: <Login /> },

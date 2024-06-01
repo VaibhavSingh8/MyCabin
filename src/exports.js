@@ -8,5 +8,7 @@ import Sidebar from "./components/Sidebar";
 import Cabins from "./pages/Cabins";
 import Bookings from "./pages/Bookings";
 import Settings from "./pages/Settings";
+import Booking from "./pages/Booking";
+import Checkin from "./pages/Checkin";
 
-export { Container, Dashboard, Account, Login, ErrorPage, Header, Sidebar, Cabins, Bookings, Settings }
+export { Container, Dashboard, Account, Login, ErrorPage, Header, Sidebar, Cabins, Bookings, Settings, Booking, Checkin }

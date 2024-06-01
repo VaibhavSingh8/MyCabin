@@ -1,14 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 
-const StyledFilter = ({ children }) => {
-  return (
-    <div className="flex items-center gap-1 border border-gray-200 bg-white rounded-md shadow-sm p-1 ">
-      {children}
-    </div>
-  );
-};
-
-const FilterButton = ({ active , children, ...props }) => {
+const FilterButton = ({ active, children, ...props }) => {
   const buttonClasses = `border-none rounded-md text-base px-2 py-1 transition-colors font-poppins font-normal ${
     active
       ? "bg-indigo-500 text-indigo-50"
@@ -36,11 +28,13 @@ const Filter = ({ filterField, options }) => {
   };
 
   return (
-    <StyledFilter>
+    <div className="flex items-center justify-between border border-gray-200 bg-white rounded-md shadow-sm p-1 mb-3 md:mb-0">
       {/* Loop through the options and create a button for each */}
       {options.map((option) => {
-        const active = option.value === 'all' ? !searchParams.has(filterField) 
-        : searchParams.get(filterField) === option.value;
+        const active =
+          option.value === "all"
+            ? !searchParams.has(filterField)
+            : searchParams.get(filterField) === option.value;
         return (
           <FilterButton
             key={option.value}
@@ -52,7 +46,7 @@ const Filter = ({ filterField, options }) => {
           </FilterButton>
         );
       })}
-    </StyledFilter>
+    </div>
   );
 };
 

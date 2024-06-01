@@ -1,6 +1,7 @@
-
-const TableOperations = ({ children }) => {
-  return <div className="flex items-center gap-4">{children}</div>;
+const TableOperations = ({ children, className }) => {
+  return (
+    <div className={`md:flex items-center gap-4 ${className}`}>{children}</div>
+  );
 };
 
 export default TableOperations;

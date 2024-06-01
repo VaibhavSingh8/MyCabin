@@ -139,15 +139,25 @@ const CabinForm = ({ onModalClose }) => {
       <div className="flex items-center justify-center gap-8">
         <Button
           type="button"
+          className="text-white"
           onClick={handleUpload}
           disabled={isImageUploading || isCreating}
         >
           {isImageUploading ? "Uploading..." : "Upload Image"}
         </Button>
-        <Button type="reset" onClick={() => onModalClose?.()}>
+        <Button
+          type="reset"
+          className="text-white"
+          onClick={() => onModalClose?.()}
+        >
           Cancel
         </Button>
-        <Button disabled={isImageUploading || isCreating}>Submit</Button>
+        <Button
+          className="text-white"
+          disabled={isImageUploading || isCreating}
+        >
+          Submit
+        </Button>
       </div>
     </Form>
   );

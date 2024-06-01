@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
 import { createContext, useContext, useState, useRef, useEffect } from "react";
 
+// eslint-disable-next-line react/display-name
 const StyledModal = React.forwardRef(
   ({ children, width = "xl", height = "max" }, ref) => {
     const modalSizes = {

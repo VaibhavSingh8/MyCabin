@@ -33,7 +33,22 @@ export const getBookings = async (queries = [], limit = 10, cursor = null, curso
   try {
     return await databases.listDocuments(config.appwriteDatabaseID, config.appwriteBookingsID, queryOptions);
   } catch (error) {
-    
     throw new Error("Couldn't find Bookings. Please retry!");
   }
 };
+
+export const getBooking = async (bookingId) => {
+  try {
+    return await databases.getDocument(config.appwriteDatabaseID, config.appwriteBookingsID, bookingId);
+  } catch (error) {
+    throw new Error("Couldn't find Booking. Please retry!");
+  }
+}
+
+export const updateBooking = async (bookingId, obj) => {
+  try {
+    return await databases.updateDocument(config.appwriteDatabaseID, config.appwriteBookingsID, bookingId, obj)
+  } catch (error) {
+      throw new Error("Couldn't update Booking. Please retry!");
+  }
+}

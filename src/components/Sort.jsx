@@ -7,17 +7,17 @@ const Sort = ({ options }) => {
     searchParams.set("sortBy", e.target.value);
     setSearchParams(searchParams);
   }
+
+  const sortByValue = searchParams.get("sortBy") || "";
   return (
     <select
       className="bg-white border border-solid border-gray-200 rounded-md py-2 px-2 font-poppins shadow-sm"
       onChange={handleChange}
-      value={searchParams.get("sortBy")}
+      value={sortByValue}
     >
-      
-      {options?.map((option) => (
-        <option value={option.value} key={option.value}>
+      {options?.map((option, index) => (
+        <option value={option.value} key={index}>
           {option.label}
-          
         </option>
       ))}
     </select>
