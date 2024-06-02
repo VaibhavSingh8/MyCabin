@@ -6,14 +6,15 @@ import { useSingleBooking } from "../bookings/useSingleBooking";
 import Checkbox from "../../components/Checkbox";
 import { formatCurrency } from "../../utils/helpers";
 import { useEffect, useState } from "react";
-import { useSettings } from "../settings/useSettings";
+//import { useSettings } from "../settings/useSettings";
 import { useCheckin } from "./useCheckin";
 
 const CheckinBooking = () => {
   const { booking, isLoading, bookingId } = useSingleBooking();
   const { addBreakfast, setAddBreakfast } = useState(false);
   const [confirmPaid, setConfirmPaid] = useState(false);
-  const { isPending: isLoadingSettings, settings } = useSettings();
+  //const { isPending: isLoadingSettings, settings } = useSettings();
+  const { checkin, isCheckingIn } = useCheckin();
   const {
     hasBreakfast = false,
     extrasPrice = 0,
@@ -26,8 +27,6 @@ const CheckinBooking = () => {
   useEffect(() => setConfirmPaid(booking?.isPaid ?? false), [booking]);
 
   const moveBack = useMoveBack();
-
-  const { checkin, isCheckingIn } = useCheckin();
 
   function handleCheckin() {
     if (!confirmPaid) return;
@@ -53,7 +52,14 @@ const CheckinBooking = () => {
       <BookingData booking={booking} />
       {!hasBreakfast && (
         <div>
-          <Checkbox className="mt-4 mx-5" checked={addBreakfast}>
+          <Checkbox
+            className="mt-4 mx-5"
+            checked={addBreakfast}
+            onChange={() => {
+              setAddBreakfast((add) => !add);
+              setConfirmPaid(false);
+            }}
+          >
             Want to add breakfast for {formatCurrency(extrasPrice)}?
           </Checkbox>
         </div>
@@ -63,7 +69,7 @@ const CheckinBooking = () => {
           className="mt-4 mx-5"
           checked={confirmPaid}
           onChange={() => setConfirmPaid((confirm) => !confirm)}
-          disabled={confirmPaid}
+          disabled={confirmPaid || isCheckingIn}
           id="confirm"
         >
           I confirm that {guestName} has paid the total amount of INR{" "}
@@ -74,8 +80,8 @@ const CheckinBooking = () => {
       <div className="flex justify-end">
         <Button
           className="mt-4 text-md font-normal mx-4 text-white border"
-          disabled={!confirmPaid}
-          xonClick={handleCheckin}
+          disabled={!confirmPaid || isCheckingIn}
+          onClick={handleCheckin}
         >
           Check In
         </Button>

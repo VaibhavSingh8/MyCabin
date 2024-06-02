@@ -7,8 +7,7 @@ import {
 import { format, isToday } from "date-fns";
 import { formatCurrency, formatDistanceFromNow } from "../../utils/helpers";
 
-const BookingData = ({ booking }) => {
-  //   console.log(booking);
+const BookingData = ({ booking = {} }) => {
   const {
     $createdAt,
     startDate,
@@ -21,8 +20,8 @@ const BookingData = ({ booking }) => {
     hasBreakfast,
     observations,
     isPaid,
-    guestID: { fulName: guestName, email, nationality },
-    cabinID: { name: cabinName },
+    guestID: { fulName: guestName, email, nationality } = {},
+    cabinID: { name: cabinName } = {},
   } = booking;
 
   function DataItem({ icon, label, children }) {
@@ -60,9 +59,6 @@ const BookingData = ({ booking }) => {
 
         <section className="p-8 pb-4 overflow-auto">
           <div className="flex items-center gap-3 mb-4 text-gray-500">
-            {/* {countryFlag && (
-              <Flag src={countryFlag} alt={`Flag of ${country}`} />
-            )} */}
             <p className="font-semibold text-gray-700">
               {guestName}{" "}
               {numberOfGuests > 1 ? `+ ${numberOfGuests - 1} guests` : ""}

@@ -7,12 +7,12 @@ import { useSingleBooking } from "./useSingleBooking";
 import { useMoveBack } from "../../hooks/useMoveBack";
 
 const BookingDetail = () => {
-  const { booking, isLoading, bookingId } = useSingleBooking();
+  const { booking = {}, isPending, bookingId } = useSingleBooking();
   const navigate = useNavigate();
   const moveBack = useMoveBack();
   const { status } = booking;
 
-  if (isLoading) return <Spinner />;
+  if (isPending) return <Spinner />;
 
   const statusTags = {
     unconfirmed: "blue",
