@@ -14,8 +14,6 @@ const BookingData = ({ booking = {} }) => {
     endDate,
     numberOfNights,
     numberOfGuests,
-    cabinPrice,
-    extrasPrice,
     totalPrice,
     hasBreakfast,
     observations,
@@ -91,10 +89,6 @@ const BookingData = ({ booking = {} }) => {
           >
             <DataItem icon={<HiOutlineCurrencyDollar />} label="Total price">
               {formatCurrency(totalPrice)}
-              {hasBreakfast &&
-                ` (${formatCurrency(cabinPrice)} cabin + ${formatCurrency(
-                  extrasPrice
-                )} breakfast)`}
             </DataItem>
             <p className="uppercase text-sm font-semibold">
               {isPaid ? "Paid" : "Will pay at property"}

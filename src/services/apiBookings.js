@@ -52,3 +52,11 @@ export const updateBooking = async (bookingId, obj) => {
       throw new Error("Couldn't update Booking. Please retry!");
   }
 }
+
+export const deleteBooking = async (bookingId) => {
+  try {
+    return await databases.deleteDocument(config.appwriteDatabaseID, config.appwriteBookingsID, bookingId);
+  } catch (error) {
+    throw new Error("Booking could not be deleted. Please retry!");
+  }
+}

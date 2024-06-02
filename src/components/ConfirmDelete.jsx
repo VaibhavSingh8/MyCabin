@@ -1,4 +1,3 @@
-
 import Button from "./Button";
 
 const ConfirmDelete = ({ resourceName, onConfirm, disabled, onModalClose }) => {
@@ -11,17 +10,16 @@ const ConfirmDelete = ({ resourceName, onConfirm, disabled, onModalClose }) => {
       </p>
       <div className="flex justify-end gap-4">
         <Button
-          variation="secondary"
+          className="text-white"
           disabled={disabled}
           onClick={onModalClose}
         >
           Cancel
         </Button>
         <Button
-          variation="danger"
           disabled={disabled}
           onClick={onConfirm}
-          className="bg-red-500 hover:bg-red-700"
+          className="bg-red-500 hover:bg-red-700 text-white"
         >
           Delete
         </Button>

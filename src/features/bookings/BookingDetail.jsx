@@ -5,12 +5,18 @@ import Tag from "../../components/Tag";
 import BookingData from "./BookingData";
 import { useSingleBooking } from "./useSingleBooking";
 import { useMoveBack } from "../../hooks/useMoveBack";
+import { useCheckout } from "../check-in-out/useCheckout";
+import useDeleteBooking from "./useDeleteBooking";
+import Modal from "../../components/Modal";
+import ConfirmDelete from "../../components/ConfirmDelete";
 
 const BookingDetail = () => {
   const { booking = {}, isPending, bookingId } = useSingleBooking();
+  const { isDeleting, deleteBooking } = useDeleteBooking();
   const navigate = useNavigate();
   const moveBack = useMoveBack();
   const { status } = booking;
+  const { checkout, isCheckingOut } = useCheckout();
 
   if (isPending) return <Spinner />;
 
@@ -49,14 +55,34 @@ const BookingDetail = () => {
         )}
 
         {status === "checked-in" && (
-          <Button className="mt-4 text-md font-normal mx-4 text-white border">
+          <Button
+            className="mt-4 text-md font-normal mx-4 text-white border"
+            onClick={() => checkout(bookingId)}
+            disabled={isCheckingOut}
+          >
             Check out
           </Button>
         )}
 
-        <Button className="mt-4 text-md font-normal mx-4 bg-red-500 hover:bg-red-600 border text-white">
-          Delete booking
-        </Button>
+        <Modal width="lg">
+          <Modal.Open width="lg" name="delete">
+            <Button
+              className="mt-4 text-md font-normal mx-4 bg-red-500 hover:bg-red-600 text-white"
+              disabled={isDeleting}
+            >
+              Delete Booking {console.log("hi2")}
+            </Button>
+          </Modal.Open>
+          <Modal.Window>
+            <ConfirmDelete
+              resourceName="booking"
+              disabled={isDeleting}
+              onConfirm={() =>
+                deleteBooking(bookingId, { onSettled: () => navigate(-1) })
+              }
+            />
+          </Modal.Window>
+        </Modal>
         <Button
           className="mt-4 text-md font-normal mx-4 bg-white hover:bg-white border border-black"
           onClick={moveBack}

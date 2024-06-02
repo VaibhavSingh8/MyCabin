@@ -1,1 +1,1 @@
-export const ITEMS_PER_PAGE = Number(3);
+export const ITEMS_PER_PAGE = Number(8);
