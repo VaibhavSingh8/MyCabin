@@ -5,7 +5,7 @@ const Bookings = () => {
   return (
     <>
       <div className="mb:4 md:flex justify-between items-center">
-        <h1 className="font-semibold text-2xl ml-3 mb-2 md:mb-0">
+        <h1 className="font-semibold text-2xl ml-3 mb-2 md:mb-0 text-[#374151]">
           All Bookings
         </h1>
         <BookingTableOperations />
