@@ -1,4 +1,5 @@
 import { Client, Databases, Query } from "appwrite";
+import {getToday} from '../utils/helpers';
 import config from "./config";
 
 const client = new Client();
@@ -60,3 +61,32 @@ export const deleteBooking = async (bookingId) => {
     throw new Error("Booking could not be deleted. Please retry!");
   }
 }
+
+// For filtering bookings based on 'Last X days'
+export const getBookingsAfterDate = async (date) => {
+  try {
+    return await databases.listDocuments(config.appwriteDatabaseID, config.appwriteBookingsID, [Query.select(['$createdAt', 'totalPrice', 'extrasPrice']), 
+    Query.greaterThanEqual('$createdAt', date),
+    Query.lessThanEqual('$createdAt', getToday({end: true})),
+  ]);
+  } catch (error) {
+    throw new Error("Couldn't find the data, Please retry!")
+  }
+}
+
+// Get stays created after the given date
+export const getStaysAfterDate = async (date) => {
+  try {
+    return await databases.listDocuments(
+      config.appwriteDatabaseID,
+      config.appwriteBookingsID,
+      [
+        Query.select(['*', 'guestID.*']), 
+        Query.greaterThanEqual('startDate', date),
+        Query.lessThanEqual('startDate', getToday()),
+      ]
+    );
+  } catch (error) {
+    throw new Error("Couldn't find the data, Please retry!");
+  }
+};

@@ -14,7 +14,7 @@ const FilterButton = ({ active, children, ...props }) => {
   );
 };
 
-const Filter = ({ filterField, options }) => {
+const Filter = ({ filterField, options, defaultValue }) => {
   const [searchParams, setSearchParams] = useSearchParams(); // Set the search params according to the filter
 
   const handleClick = (value) => {
@@ -34,7 +34,9 @@ const Filter = ({ filterField, options }) => {
         const active =
           option.value === "all"
             ? !searchParams.has(filterField)
-            : searchParams.get(filterField) === option.value;
+            : searchParams.get(filterField) === option.value ||
+              (searchParams.get(filterField) === null &&
+                option.value === defaultValue);
         return (
           <FilterButton
             key={option.value}
