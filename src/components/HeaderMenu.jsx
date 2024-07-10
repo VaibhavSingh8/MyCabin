@@ -4,7 +4,7 @@ import { HiOutlineUser } from "react-icons/hi2";
 function HeaderMenu() {
   //const navigate = useNavigate();
   return (
-    <div>
+    <div className="lg:mr-6">
       <ul className="flex gap-2 justify-end">
         <li>
           <button

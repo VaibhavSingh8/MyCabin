@@ -3,6 +3,7 @@ import { useRecentBookings } from "./useRecentBookings";
 import { useRecentStays } from "./useRecentStays";
 import { useCabins } from "../cabins/useCabins";
 import Spinner from "../../components/Spinner";
+import { SalesChart } from "./SalesChart";
 
 function DashboardLayout() {
   const {
@@ -10,7 +11,7 @@ function DashboardLayout() {
     bookings,
     numberOfDays,
   } = useRecentBookings();
-  const { isPending: isPendingStays, stays, confirmedStays } = useRecentStays();
+  const { isPending: isPendingStays, confirmedStays } = useRecentStays();
 
   const { data: cabins, isPending: isPendingCabins } = useCabins();
 
@@ -20,14 +21,18 @@ function DashboardLayout() {
     return <Spinner />;
 
   return (
-    <div className="md:grid md:grid-cols-3 lg:grid-cols-4 gap-6 place-items-center mt-6 font-semibold text-xl">
-      <Statistics
-        bookings={bookings}
-        confirmedStays={confirmedStays}
-        numberOfDays={numberOfDays}
-        cabinCount={cabinCount}
-      />
-    </div>
+    <>
+      <div className="md:grid md:grid-cols-3 lg:grid-cols-4 gap-6 place-items-center mt-6 font-semibold text-xl">
+        <Statistics
+          bookings={bookings}
+          confirmedStays={confirmedStays}
+          numberOfDays={numberOfDays}
+          cabinCount={cabinCount}
+        />
+      </div>
+
+      <SalesChart bookings={bookings} numberOfDays={numberOfDays} />
+    </>
   );
 }
 
