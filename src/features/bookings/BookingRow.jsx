@@ -23,8 +23,11 @@ function BookingRow({ booking }) {
     numberOfNights,
     status,
     $id: bookingId,
-    cabinID: { name: cabinName },
-    guestID: { fulName: guestName, email },
+    cabinID: { name: cabinName = "Unknown Cabin" },
+    guestID: {
+      fulName: guestName = "Unknown Guest",
+      email = "unknown@example.com",
+    },
   } = booking;
 
   const navigate = useNavigate();

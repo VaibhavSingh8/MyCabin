@@ -1,12 +1,11 @@
-
-
 const Logo = () => {
   return (
-    <div className="flex text-center items-center justify-center">
+    <div>
       <img
         src="/logo.png"
         alt="Logo"
-        className="h-16 mb-8 max-w-full"
+        // width={220}
+        className="flex items-center w-40 lg:ml-6 lg:w-52"
       />
     </div>
   );

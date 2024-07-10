@@ -1,11 +1,31 @@
 import MainNav from "./MainNav";
-import Logo from "./Logo";
+import { useState } from "react";
+import { LuArrowBigLeftDash, LuArrowBigRightDash } from "react-icons/lu";
 
 const Sidebar = ({ className }) => {
+  const [collapse, setCollapse] = useState(false);
+
+  const handleCollapse = () => {
+    setCollapse((prev) => !prev);
+  };
+
   return (
-    <div className={`p-6 ${className}`}>
-      <Logo />
-      <MainNav />
+    <div
+      className={`hidden p-6 relative w-[10px] lg:block transition-all duration-300 ease-linear ${
+        collapse ? "lg:w-28" : "lg:w-64"
+      }  ${className}`}
+    >
+      <div
+        className="absolute -right-3 top-14 mt-8 hidden cursor-pointer lg:block text-indigo-500"
+        onClick={() => handleCollapse}
+      >
+        {collapse ? (
+          <LuArrowBigRightDash className="h-10 w-10" onClick={handleCollapse} />
+        ) : (
+          <LuArrowBigLeftDash className="h-10 w-10" onClick={handleCollapse} />
+        )}
+      </div>
+      <MainNav collapse={collapse} />
     </div>
   );
 };
