@@ -16,8 +16,9 @@ const Sidebar = ({ className }) => {
       }  ${className}`}
     >
       <div
-        className="absolute -right-3 top-14 mt-8 hidden cursor-pointer lg:block text-indigo-500"
-        onClick={() => handleCollapse}
+        className={`absolute ${
+          collapse ? "-right-7" : "-right-3"
+        } top-14 mt-8 hidden cursor-pointer lg:block text-indigo-500`}
       >
         {collapse ? (
           <LuArrowBigRightDash className="h-10 w-10" onClick={handleCollapse} />

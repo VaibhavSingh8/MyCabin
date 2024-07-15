@@ -14,15 +14,6 @@ function App() {
           </main>
         </div>
       </div>
-      {/* <div className="flex flex-col lg:flex-row lg:h-screen">
-        <Sidebar />
-        <div className="flex flex-col w-full lg:flex-1">
-          <Header />
-          <main className="bg-gray-100 pt-16 px-6 overflow-auto flex-1 min-h-dvh">
-            <Outlet />
-          </main>
-        </div>
-      </div> */}
     </Container>
   );
 }

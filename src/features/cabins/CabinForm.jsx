@@ -53,7 +53,7 @@ const CabinForm = ({ onModalClose }) => {
     cabinData.regularPrice = parseInt(cabinData.regularPrice);
 
     createCabin(cabinData, {
-      onSuccess: (data) => {
+      onSuccess: () => {
         reset();
         onModalClose?.();
       },

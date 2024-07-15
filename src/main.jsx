@@ -45,10 +45,10 @@ const router = createBrowserRouter([
       { path: "/checkin/:bookingId", element: <Checkin /> },
       { path: "/cabins", element: <Cabins /> },
       { path: "/settings", element: <Settings /> },
-      { path: "/login", element: <Login /> },
     ],
     errorElement: <ErrorPage />,
   },
+  { path: "/login", element: <Login /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
