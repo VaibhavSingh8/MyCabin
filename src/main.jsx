@@ -22,6 +22,7 @@ import App from "./App.jsx";
 import "./index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ProtectedRoutes from "./components/ProtectedRoutes.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,7 +36,11 @@ const queryClient = new QueryClient({
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <ProtectedRoutes>
+        <App />
+      </ProtectedRoutes>
+    ),
     children: [
       { path: "/", element: <Navigate replace to="cabins" /> },
       { path: "/dashboard", element: <Dashboard /> },

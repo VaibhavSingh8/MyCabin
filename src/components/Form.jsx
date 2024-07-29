@@ -1,5 +1,5 @@
 const Form = ({ children, onSubmit, type = "regular", className = "" }) => {
-  const formClasses = `overflow-hidden font-poppins rounded-lg bg-white${
+  const formClasses = `overflow-hidden font-poppins rounded-lg bg-white ${
     type === "regular"
       ? "p-8 border border-gray-100"
       : type === "modal"
