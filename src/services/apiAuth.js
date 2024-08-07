@@ -18,42 +18,17 @@ export const signup = async ({ email, password, fullName }) => {
 export const login = async (email, password) => {
   try {
     const session = await account.createEmailSession(email, password);
-
     if (!session) {
       return { isAuthenticated: false, user: null };
     }
-
     const user = await account.get();
-
     return { isAuthenticated: true, user };
   } catch (error) {
-    if (error.code === 401) {
-      try {
-        await account.deleteSession("current");
-        const retrySession = await account.createEmailSession(email, password);
-
-        if (!retrySession) {
-          return { isAuthenticated: false, user: null };
-        }
-
-        const user = await account.get();
-
-        return { isAuthenticated: true, user };
-      } catch (retryError) {
-        console.error("Retry error:", retryError.message);
-        return {
-          isAuthenticated: false,
-          user: null,
-          error: "Wrong credentials! Please try again",
-        };
-      }
-    } else {
-      return {
-        isAuthenticated: false,
-        user: null,
-        error: error.message || "An error occurred during login",
-      };
-    }
+    return {
+      isAuthenticated: false,
+      user: null,
+      error: "Invalid Email or Password",
+    };
   }
 };
 
