@@ -42,7 +42,7 @@ const router = createBrowserRouter([
       </ProtectedRoutes>
     ),
     children: [
-      { path: "/", element: <Navigate replace to="cabins" /> },
+      { path: "/", element: <Navigate replace to="dashboard" /> },
       { path: "/dashboard", element: <Dashboard /> },
       { path: "/account", element: <Account /> },
       { path: "/bookings", element: <Bookings /> },

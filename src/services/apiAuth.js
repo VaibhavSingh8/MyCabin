@@ -27,7 +27,7 @@ export const login = async (email, password) => {
     return {
       isAuthenticated: false,
       user: null,
-      error: "Invalid Email or Password",
+      error: error.message || "An error occurred during login",
     };
   }
 };
@@ -44,7 +44,6 @@ export const getCurrentUser = async () => {
 
     return { isAuthenticated: true, user };
   } catch (error) {
-    console.error("Error getting current session:", error.message);
     return { isAuthenticated: false, user: null };
   }
 };
